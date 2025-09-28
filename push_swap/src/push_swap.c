@@ -1,4 +1,4 @@
-#include "../push_swap.h"
+#include "../includes/push_swap.h"
 
 #include <stdio.h>
 static void	check_duplicates(t_args args, t_dict *original_dict)
@@ -110,7 +110,6 @@ int	main(int ac, char *av[])
 	t_list	*sentinel_b;
 	t_dict	*ranked_dict;
 	t_args	args;
-	int     size;
 
 	args = init_args(ac, av);
 	ranked_dict = validate_and_create_ranks(args);

@@ -12,8 +12,7 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include <limits.h>
-// #include "./libftprintf/libft/libft.h"
-#include "./libftprintf/includes/ft_printf.h"
+#include "../libftprintf/includes/ft_printf.h"
 
 typedef struct s_list
 {

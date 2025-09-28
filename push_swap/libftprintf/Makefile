@@ -6,7 +6,7 @@
 #    By: takenakatakeshiichirouta <takenakatakes    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/02 20:12:45 by takenakatak       #+#    #+#              #
-#    Updated: 2025/09/27 19:04:27 by takenakatak      ###   ########.fr        #
+#    Updated: 2025/09/29 02:20:01 by takenakatak      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ $(NAME):$(OBJ)
 	cp ./libft/libft.a $@
 	ar csr $@ $?
 
-src/%.o:src/%.c
+./src/%.o: ./src/%.c
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
 .PHONY:clean

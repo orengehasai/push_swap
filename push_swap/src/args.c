@@ -1,4 +1,4 @@
-#include "../push_swap.h"
+#include "../includes/push_swap.h"
 
 int	my_atoi(const char *str, t_dict *i_array, t_args args)
 {
