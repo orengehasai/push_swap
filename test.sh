@@ -1,8 +1,10 @@
 #!/bin/bash
 
-ARG=$(python3 -c "import random; print(' '.join(map(str, random.sample(range(100000), 1000))))")
+NUMBER=100
+COUNT=6
+ARG=$(python3 -c "import random; print(' '.join(map(str, random.sample(range(-${NUMBER}, ${NUMBER} + 1), ${COUNT}))))")
 
-PUSH_SWAP="./push_swap"
+PUSH_SWAP="./push_swap/push_swap"
 CHECKER="./checker_Mac"
 
 RED='\033[0;31m'

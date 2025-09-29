@@ -6,7 +6,7 @@
 #    By: takenakatakeshiichirouta <takenakatakes    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/29 01:54:54 by takenakatak       #+#    #+#              #
-#    Updated: 2025/09/29 02:21:16 by takenakatak      ###   ########.fr        #
+#    Updated: 2025/09/29 14:14:25 by takenakatak      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,9 @@ CFLAGS = -Wall -Wextra -Werror
 
 CPPFLAGS = -I includes -I libftprintf/includes
 
-SRC = ./src/args.c ./src/ft_radixsort.c ./src/ft_split.c ./src/lst_func.c\
-	./src/mini_push_swap.c ./src/operations_1.c ./src/operations_2.c\
-	./src/push_swap.c ./src/utils.c
+SRC = ./src/args.c ./src/args_2.c ./src/ft_radixsort.c ./src/ft_split.c\
+	./src/lst_func.c ./src/mini_push_swap.c ./src/operations_1.c\
+	./src/push_swap.c ./src/utils.c ./src/operations_2.c
 
 OBJ = $(SRC:%.c=%.o)
 

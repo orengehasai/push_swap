@@ -9,8 +9,6 @@
 #define STACK_B	1
 
 #include <stdlib.h>
-#include <stdbool.h>
-#include <unistd.h>
 #include <limits.h>
 #include "../libftprintf/includes/ft_printf.h"
 
@@ -35,17 +33,25 @@ typedef struct s_args
     int     needs_free;
 }   t_args;
 
-int	my_atoi(const char *str, t_dict *i_array, t_args args);
+typedef struct s_program
+{
+    t_list	*stack_a;
+    t_list	*stack_b;
+    t_dict	*dict;
+    t_args	args;
+}   t_program;
 
-t_dict *dict_maker(t_args args);
+t_dict	*dict_maker(t_program p);
 
-t_dict *sort(int ac, t_dict *original_dict);
+void	check_duplicates(t_program p);
 
-int	is_originally_sorted(int ac, t_dict *sorted_dict);
+t_dict *sort(t_program p);
 
-t_dict *originate(int ac, t_dict *sorted_dict);
+int	is_originally_sorted(t_program p);
 
-void 	ft_radixsort(t_list *sentinel_a, t_list *sentinel_b, int max_bit);
+t_dict	*originate(t_program p);
+
+void 	ft_radixsort(t_list *stack_a, t_list *stack_b, int max_bit);
 
 int ft_max(int a, int b);
 
@@ -65,17 +71,17 @@ void push(t_list *sentinel_source, t_list *sentinel_dest);
 
 void rotate(t_list *sentinel);
 
-void rr(t_list *sentinel_a, t_list *sentinel_b);
+void rr(t_list *stack_a, t_list *stack_b);
 
 void reverse_rotate(t_list *sentinel);
 
-void rrr(t_list *sentinel_a, t_list *sentinel_b);
+void rrr(t_list *stack_a, t_list *stack_b);
 
 void swap(t_list *sentinel);
 
-void ss(t_list *sentinel_a, t_list *sentinel_b);
+void ss(t_list *stack_a, t_list *stack_b);
 
-void	print_error(char *massage, t_list *sentinel, t_dict *dict, t_args args);
+void print_error(t_program p);
 
 size_t	ft_strlen(const char *s);
 
@@ -83,12 +89,14 @@ char **free_split(char **av);
 
 int	ft_isdigit(int c);
 
-void sort_two(t_list *sentinel_a);
+void	ft_bzero(void *s, size_t n);
 
-void sort_three(t_list *sentinel_a);
+void sort_two(t_list *stack_a);
 
-void	sort_five(t_list *sentinel_a, t_list *sentinel_b);
+void sort_three(t_list *stack_a);
 
-void    sort_handler(t_list *sentinel_a, t_list *sentinel_b, int size);
+void	sort_five(t_list *stack_a, t_list *stack_b);
+
+void sort_handler(t_program p, int size);
 
 #endif

@@ -1,0 +1,7 @@
+{
+	"files.associations": {
+		"*.erb": "erb",
+		"push_swap.h": "c",
+		"limits.h": "c"
+	}
+}

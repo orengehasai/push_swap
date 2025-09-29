@@ -1,74 +1,93 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mini_push_swap.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: takenakatakeshiichirouta <takenakatakes    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/29 14:07:01 by takenakatak       #+#    #+#             */
+/*   Updated: 2025/09/29 14:10:55 by takenakatak      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/push_swap.h"
 
-void sort_two(t_list *sentinel_a)
+void	sort_two(t_list *stack_a)
 {
-	t_list *top;
-	t_list *second;
+	t_list	*top;
+	t_list	*second;
 
-	top = sentinel_a->next;
+	top = stack_a->next;
 	second = top->next;
 	if (top->content > second->content)
-		swap(sentinel_a);
-	return;
-}
-void sort_three(t_list *sentinel_a)
-{
-	t_list *top;
-	t_list *second;
-	int		max_rank;
-
-	max_rank = 2;
-    top = sentinel_a->next;
-    second = top->next;
-	if (top->content == max_rank)
-		rotate(sentinel_a);
-	else if (second->content)
-		reverse_rotate(sentinel_a);
-	top = sentinel_a->next;
-    if (top->content > top->next->content)
-        swap(sentinel_a);
+		swap(stack_a);
+	return ;
 }
 
-static int is_sorted(t_list *sentinel_a)
+void	sort_three(t_list *stack_a)
 {
-	t_list *head;
+	int	top;
+	int	middle;
+	int	bottom;
 
-	head = sentinel_a->next;
-    while (head->next)
-    {
-        if (head->content > head->next->content)
-            return (0);
-        head = head->next;
-    }
-    return (1);
+	top = stack_a->next->content;
+	middle = stack_a->next->next->content;
+	bottom = stack_a->next->next->next->content;
+	if (top > middle && middle < bottom && top < bottom)
+		swap(stack_a);
+	else if (top > middle && middle > bottom)
+	{
+		swap(stack_a);
+		reverse_rotate(stack_a);
+	}
+	else if (top > middle && middle < bottom && top > bottom)
+		rotate(stack_a);
+	else if (top < middle && middle > bottom && top < bottom)
+	{
+		swap(stack_a);
+		rotate(stack_a);
+	}
+	else if (top < middle && middle > bottom && top > bottom)
+		reverse_rotate(stack_a);
 }
 
-void	sort_five(t_list *sentinel_a, t_list *sentinel_b)
+static int	is_sorted(t_list *stack_a)
 {
-    int size;
-    int pushed_count;
-    int threshold;
+	t_list	*head;
 
-    size = ft_lstsize(sentinel_a) - 1;
-    pushed_count = 0;
-    threshold = size - 3;
-    while (pushed_count < threshold)
-    {
-        if (sentinel_a->next->content < threshold)
-        {
-            push(sentinel_a, sentinel_b);
-            pushed_count++;
-        }
-        else
-            rotate(sentinel_a);
-    }
-    if (!is_sorted(sentinel_a))
-        sort_three(sentinel_a);
-    while (pushed_count > 0)
-    {
-        push(sentinel_b, sentinel_a);
-        pushed_count--;
-    }
-	if (sentinel_a->next->content > sentinel_a->next->next->content)
-        swap(sentinel_a);
+	head = stack_a->next;
+	while (head->next)
+	{
+		if (head->content > head->next->content)
+			return (0);
+		head = head->next;
+	}
+	return (1);
+}
+
+void	sort_five(t_list *stack_a, t_list *stack_b)
+{
+	int	size;
+	int	pushed_count;
+	int	threshold;
+
+	size = ft_lstsize(stack_a) - 1;
+	pushed_count = 0;
+	threshold = size - 3;
+	while (pushed_count < threshold)
+	{
+		if (stack_a->next->content < threshold)
+		{
+			push(stack_a, stack_b);
+			pushed_count++;
+		}
+		else
+			rotate(stack_a);
+	}
+	if (!is_sorted(stack_a))
+		sort_three(stack_a);
+	while (pushed_count-- > 0)
+		push(stack_b, stack_a);
+	if (stack_a->next->content > stack_a->next->next->content)
+		swap(stack_a);
 }

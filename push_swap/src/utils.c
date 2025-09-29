@@ -1,19 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: takenakatakeshiichirouta <takenakatakes    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/29 02:37:40 by takenakatak       #+#    #+#             */
+/*   Updated: 2025/09/29 14:28:07 by takenakatak      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/push_swap.h"
 
-void	print_error(char *massage, t_list *sentinel, t_dict *dict, t_args args)
+void	print_error(t_program p)
 {
-	char *std_error_message;
-
-	if (sentinel)
-		ft_lstclear(&sentinel);
-	if (dict)
-		free(dict);
-	if (args.needs_free)
-		free_split(args.av);
-	std_error_message = RED "\nError" RESET "\n";
-	write(2, std_error_message, ft_strlen(std_error_message));
-	// ft_putstr_fd(std_error_message, 2);
-	ft_printf(BRED "%s" RESET "\n" , massage);
+	if (p.stack_a)
+		ft_lstclear(&p.stack_a);
+	if (p.dict)
+		free(p.dict);
+	if (p.args.needs_free)
+		free_split(p.args.av);
+	ft_printf(RED "Error" RESET "\n");
 	exit(EXIT_FAILURE);
 }
 
@@ -30,9 +37,9 @@ size_t	ft_strlen(const char *s)
 	return (cnt);
 }
 
-char **free_split(char **av)
+char	**free_split(char **av)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (av[i])
@@ -49,4 +56,13 @@ char **free_split(char **av)
 int	ft_isdigit(int c)
 {
 	return ('0' <= c && c <= '9');
+}
+
+void	ft_bzero(void *s, size_t n)
+{
+	unsigned char	*str;
+
+	str = (unsigned char *)s;
+	while (n--)
+		*str++ = 0;
 }

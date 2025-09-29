@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   args.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: takenakatakeshiichirouta <takenakatakes    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/29 02:30:44 by takenakatak       #+#    #+#             */
+/*   Updated: 2025/09/29 14:13:12 by takenakatak      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/push_swap.h"
 
-int	my_atoi(const char *str, t_dict *i_array, t_args args)
+static int	my_atoi(const char *str, t_program p)
 {
 	int		sign;
 	long	res;
@@ -13,109 +25,91 @@ int	my_atoi(const char *str, t_dict *i_array, t_args args)
 		str++;
 	}
 	if (ft_strlen(str) > 10)
-		print_error("Some arguments exceed the int limits or is not integers.", NULL, i_array, args);
+		print_error(p);
 	while (ft_isdigit(*str))
 	{
 		res = res * 10 + (*str - '0');
 		str++;
 	}
 	res *= sign;
-	if (res < INT_MIN || res >INT_MAX)
-		print_error("Some arguments exceed the int limits.", NULL, i_array, args);
-	if(*str != '\0')
-		print_error("Some arguments are not integers.", NULL, i_array, args);
+	if (res < INT_MIN || res > INT_MAX)
+		print_error(p);
+	if (*str != '\0')
+		print_error(p);
 	return ((int)res);
 }
 
-t_dict *dict_maker(t_args args)
+t_dict	*dict_maker(t_program p)
 {
-	t_dict	*i_array;
-	int	i;
+	int		i;
 
-	i_array = malloc(sizeof(t_dict) * args.ac);
-	if (!i_array)
-		print_error("memory allocation failed.", NULL, NULL, args);
+	p.dict = malloc(sizeof(t_dict) * p.args.ac);
+	if (!p.dict)
+		print_error(p);
 	i = 0;
-	while(i < args.ac)
+	while (i < p.args.ac)
 	{
-		(i_array[i]).original_index = i;
-		(i_array[i]).value = my_atoi(args.av[i], i_array, args);
-		// ft_printf("i : %d, key : %d, value : %d, original index : %d\n", i,(i_array[i]).key, (i_array[i]).value, (i_array[i]).original_index);
+		(p.dict[i]).original_index = i;
+		(p.dict[i]).value = my_atoi(p.args.av[i], p);
 		i++;
 	}
-	return (i_array);
+	return (p.dict);
 }
 
-t_dict *sort(int ac, t_dict *original_dict)
+void	check_duplicates(t_program p)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < p.args.ac)
+	{
+		j = i + 1;
+		while (j < p.args.ac)
+		{
+			if (p.dict[i].value == p.dict[j].value)
+				print_error(p);
+			j++;
+		}
+		i++;
+	}
+}
+
+t_dict	*sort(t_program p)
 {
 	int		i;
 	int		j;
 	t_dict	tmp;
 
 	i = 0;
-	while(i < ac - 1)
+	while (i < p.args.ac - 1)
 	{
 		j = 0;
-		while(j < ac - 1 - i)
+		while (j < p.args.ac - 1 - i)
 		{
-			if (original_dict[j].value > original_dict[j + 1].value)
+			if (p.dict[j].value > p.dict[j + 1].value)
 			{
-				tmp = original_dict[j];
-				original_dict[j] = original_dict[j + 1];
-				original_dict[j + 1]= tmp;
+				tmp = p.dict[j];
+				p.dict[j] = p.dict[j + 1];
+				p.dict[j + 1] = tmp;
 			}
 			j++;
 		}
 		i++;
 	}
-	return (original_dict);
+	return (p.dict);
 }
 
-int	is_originally_sorted(int ac, t_dict *sorted_dict)
+int	is_originally_sorted(t_program p)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(i < ac)
+	while (i < p.args.ac)
 	{
-		if (sorted_dict[i].original_index != i)
+		if (p.dict[i].original_index != i)
 			return (0);
 		i++;
 	}
 	return (1);
-}
-
-t_dict *originate(int ac, t_dict *sorted_dict)
-{
-	int i;
-	int original_index;
-	t_dict	tmp[ac];
-
-	i = 0;
-	while (i < ac)
-	{
-		sorted_dict[i].key = i;
-		i++;
-	}
-	i = 0;
-	while (i < ac)
-	{
-		original_index = sorted_dict[i].original_index;
-		tmp[original_index] = sorted_dict[i];
-		i++;
-	}
-	i = 0;
-	while (i < ac)
-	{
-		sorted_dict[i] = tmp[i];
-		i++;
-	}
-	// i = 0;
-	// ft_printf("sorting completed\n");
-	// while (i < ac)
-	// {
-	// 	ft_printf("key : %d, original_index : %d, value : %d\n", sorted_dict[i].key, sorted_dict[i].original_index, sorted_dict[i].value);
-	// 	i++;
-	// }
-	return (sorted_dict);
 }

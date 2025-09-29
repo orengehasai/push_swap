@@ -1,5 +1,16 @@
-#include "../includes/push_swap.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: takenakatakeshiichirouta <takenakatakes    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/29 02:36:50 by takenakatak       #+#    #+#             */
+/*   Updated: 2025/09/29 13:27:35 by takenakatak      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "../includes/push_swap.h"
 
 static int	count_words(char const *s, char c)
 {
@@ -62,7 +73,7 @@ static char	**set_strs(char const *s, char c, int cntwords, int *cntlens)
 		instrindex = 0;
 		strs[index] = malloc(sizeof(char) * (cntlens[index] + 1));
 		if (!strs[index])
-			return free_split(strs);
+			return (free_split(strs));
 		strs[index][cntlens[index]] = '\0';
 		while (*s == c)
 			s++;

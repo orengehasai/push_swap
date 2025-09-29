@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_radixsort.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: takenakatakeshiichirouta <takenakatakes    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/29 02:38:09 by takenakatak       #+#    #+#             */
+/*   Updated: 2025/09/29 14:06:36 by takenakatak      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/push_swap.h"
 
-void 	ft_radixsort(t_list *sentinel_a, t_list *sentinel_b, int max_bits)
+void	ft_radixsort(t_list *stack_a, t_list *stack_b, int max_bits)
 {
 	int		i;
 	int		j;
@@ -8,48 +20,48 @@ void 	ft_radixsort(t_list *sentinel_a, t_list *sentinel_b, int max_bits)
 	t_list	*head_node;
 
 	i = 0;
-	while(i < max_bits)
+	while (i < max_bits)
 	{
 		j = 0;
-		size = ft_lstsize(sentinel_a) - 1 ;
-		while(j < size)
+		size = ft_lstsize(stack_a) - 1 ;
+		while (j < size)
 		{
-			head_node = sentinel_a->next;
+			head_node = stack_a->next;
 			if (((head_node -> content >> i) & 1) == 1)
-				rotate(sentinel_a);
+				rotate(stack_a);
 			else
-				push(sentinel_a, sentinel_b);
+				push(stack_a, stack_b);
 			j++;
 		}
-		while (ft_lstsize(sentinel_b) > 1)
-            push(sentinel_b, sentinel_a);
-        i++;
+		while (ft_lstsize(stack_b) > 1)
+			push(stack_b, stack_a);
+		i++;
 	}
 }
 
-int ft_max(int a, int b)
+int	ft_max(int a, int b)
 {
-	if(a < b)
+	if (a < b)
 		return (b);
 	else
 		return (a);
 }
 
-int max_bits(t_list *sentinel_stack_a)
+int	max_bits(t_list *stack_a)
 {
-	t_list *current_node;
-	int	max_num;
-	int	max_bits;
+	t_list	*current_node;
+	int		max_num;
+	int		max_bits;
 
-	current_node = sentinel_stack_a->next;
+	current_node = stack_a->next;
 	max_num = current_node->content;
-	while(current_node->next)
+	while (current_node->next)
 	{
 		current_node = current_node->next;
 		max_num = ft_max(max_num, current_node->content);
 	}
 	max_bits = 0;
-	while((max_num >> max_bits) != 0)
+	while ((max_num >> max_bits) != 0)
 		max_bits++;
-	return max_bits;
+	return (max_bits);
 }
